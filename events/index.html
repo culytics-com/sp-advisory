@@ -58,9 +58,6 @@ MOBILE NAVIGATION
 
 .mobile-menu-toggle{
 
-  position:relative;
-z-index:100000;
-
   display:none;
 
   width:48px;
@@ -79,9 +76,15 @@ z-index:100000;
 
   cursor:pointer;
 
+  margin-left:auto;
+
+  position:relative;
+
+  z-index:100001;
+
   box-shadow:
   0 10px 25px rgba(0,0,0,0.06);
-}
+  }
 
 .mobile-menu-toggle span{
 
@@ -95,12 +98,15 @@ z-index:100000;
 
 .mobile-menu{
 
-  position:absolute;
+  position:fixed;
 
-  top:100%;
+  top:88px;
+
   left:0;
 
   width:100%;
+
+  height:calc(100vh - 88px);
 
   background:white;
 
@@ -112,11 +118,12 @@ z-index:100000;
 
   gap:18px;
 
-  border-bottom:
-  1px solid rgba(0,0,0,0.06);
+  overflow-y:auto;
+
+  z-index:100000;
 
   box-shadow:
-  0 20px 50px rgba(0,0,0,0.06);
+  0 20px 50px rgba(0,0,0,0.08);
 }
 
 .mobile-menu.active{
@@ -241,14 +248,6 @@ z-index:100000;
   .mobile-menu-toggle{
     display:flex;
   }
-
-  .mobile-menu{
-    position:absolute;
-    top:100%;
-    left:0;
-    width:100%;
-    z-index:99999;
-  }
 }
 
 /* =========================
@@ -275,6 +274,7 @@ nav.scrolled{
   justify-content:space-between;
   align-items:center;
   padding:20px 0;
+  position:relative;
 }
 
 .logo-link{
