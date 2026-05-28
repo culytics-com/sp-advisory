@@ -58,6 +58,9 @@ MOBILE NAVIGATION
 
 .mobile-menu-toggle{
 
+  position:relative;
+z-index:100000;
+
   display:none;
 
   width:48px;
@@ -227,12 +230,33 @@ MOBILE NAVIGATION
 
 @media(max-width:768px){
 
-  .nav-buttons{
+.nav-links{
     display:none;
   }
 
-  .mobile-menu-toggle{
-    display:flex;
+  .nav-buttons{
+    display:none !important;
+  }
+
+  .hero-content h1{
+    font-size:40px;
+    letter-spacing:-2px;
+  }
+
+  .hero-content p{
+    font-size:18px;
+  }
+
+  .events-cta{
+    padding:60px 30px;
+  }
+
+  .events-cta h2{
+    font-size:34px;
+  }
+
+  .year-header h2{
+    font-size:32px;
   }
 
 }
@@ -244,7 +268,7 @@ NAVBAR
 nav{
   position:sticky;
   top:0;
-  z-index:1000;
+  z-index:99999;
   background:rgba(255,255,255,0.92);
   backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(0,0,0,0.05);
@@ -1407,7 +1431,6 @@ NAVBAR
       </a>
 
     </div>
-
   </div>
 
 </div>
