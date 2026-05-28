@@ -230,7 +230,7 @@ z-index:100000;
 
 @media(max-width:768px){
 
-.nav-links{
+  .nav-links{
     display:none;
   }
 
@@ -238,27 +238,17 @@ z-index:100000;
     display:none !important;
   }
 
-  .hero-content h1{
-    font-size:40px;
-    letter-spacing:-2px;
+  .mobile-menu-toggle{
+    display:flex;
   }
 
-  .hero-content p{
-    font-size:18px;
+  .mobile-menu{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    z-index:99999;
   }
-
-  .events-cta{
-    padding:60px 30px;
-  }
-
-  .events-cta h2{
-    font-size:34px;
-  }
-
-  .year-header h2{
-    font-size:32px;
-  }
-
 }
 
 /* =========================
@@ -1321,8 +1311,7 @@ NAVBAR
 <span></span>
 
 </div>
-
-</div>
+  
 <!-- MOBILE MENU -->
 <div class="mobile-menu">
 
