@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>CULytics Events</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --navy:#1F2D4E;
+  --gold:#C49A22;
+  --gold-light:#F0DFA0;
+  --accent-blue:#4A6FA5;
+  --white:#ffffff;
+  --off-white:#F7F6F3;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#ffffff;
+  color:var(--navy);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+}
+
+.container{
+  width:90%;
+  max-width:1280px;
+  margin:auto;
+}
+
+
+/* =========================
+MOBILE NAVIGATION
+========================= */
+
+.mobile-menu-toggle{
+
+  display:none;
+
+  width:48px;
+  height:48px;
+
+  border-radius:12px;
+
+  background:white;
+
+  align-items:center;
+  justify-content:center;
+
+  flex-direction:column;
+
+  gap:5px;
+
+  cursor:pointer;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,0.06);
+}
+
+.mobile-menu-toggle span{
+
+  width:22px;
+  height:2px;
+
+  background:var(--navy);
+
+  border-radius:10px;
+}
+
+.mobile-menu{
+
+  position:absolute;
+
+  top:100%;
+  left:0;
+
+  width:100%;
+
+  background:white;
+
+  padding:30px;
+
+  display:none;
+
+  flex-direction:column;
+
+  gap:18px;
+
+  border-bottom:
+  1px solid rgba(0,0,0,0.06);
+
+  box-shadow:
+  0 20px 50px rgba(0,0,0,0.06);
+}
+
+.mobile-menu.active{
+  display:flex;
+}
+
+.mobile-menu a{
+
+  color:var(--navy);
+
+  font-weight:600;
+}
+
+.mobile-btn{
+
+  margin-top:10px;
+
+  padding:14px 18px;
+
+  border-radius:12px;
+
+  border:
+  1px solid rgba(31,45,78,0.1);
+}
+
+.mobile-primary{
+
+  background:var(--gold);
+
+  color:white !important;
+
+  border:none;
+}
+
+@media(max-width:768px){
+
+  .nav-buttons{
+    display:none;
+  }
+
+  .mobile-menu-toggle{
+    display:flex;
+  }
+
+}
+
+/* =========================
+NAVBAR
+========================= */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+}
+
+nav.scrolled{
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(16px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.nav-wrapper{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 0;
+}
+
+.logo-link{
+  display:inline-flex;
+  align-items:center;
+}
+
+.site-logo{
+  height:52px;
+  width:auto;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:35px;
+}
+
+.nav-links a{
+  color:var(--navy);
+  font-weight:500;
+  transition:0.3s ease;
+}
+
+.nav-links a:hover{
+  color:var(--gold);
+}
+
+.nav-buttons{
+  display:flex;
+  gap:15px;
+}
+
+/* =========================
+DROPDOWN NAV (FIXED HOVER)
+========================= */
+
+.nav-dropdown{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+/* make trigger easier to hover */
+.dropdown-trigger{
+  position:relative;
+  padding:10px 0;
+  display:inline-block;
+}
+
+/* invisible hover bridge (IMPORTANT FIX) */
+.nav-dropdown::after{
+  content:"";
+  position:absolute;
+  top:100%;
+  left:0;
+  width:100%;
+  height:18px;
+}
+
+/* dropdown menu */
+.dropdown-menu{
+  position:absolute;
+  top:calc(100% + 10px);
+  left:50%;
+  transform:translateX(-50%) translateY(10px);
+
+  min-width:220px;
+
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(18px);
+
+  border:1px solid rgba(31,45,78,0.08);
+  border-radius:18px;
+
+  padding:12px;
+
+  box-shadow:0 20px 50px rgba(31,45,78,0.08);
+
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+
+  transition:0.25s ease;
+
+  z-index:999;
+}
+
+/* SHOW ON HOVER (fixed stability) */
+.nav-dropdown:hover .dropdown-menu{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+
+/* links */
+.dropdown-menu a{
+  display:block;
+  padding:12px 16px;
+  border-radius:12px;
+  color:var(--navy);
+  font-weight:500;
+  transition:0.25s ease;
+}
+
+.dropdown-menu a:hover{
+  background:rgba(196,154,34,0.10);
+  color:var(--gold);
+}
+
+.btn-primary{
+  background:var(--gold);
+  color:white;
+  padding:14px 24px;
+  border-radius:14px;
+  font-weight:600;
+  transition:0.3s ease;
+  box-shadow:0 10px 25px rgba(196,154,34,0.25);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  background:#b48818;
+}
+
+.btn-secondary{
+  border:1px solid rgba(31,45,78,0.15);
+  color:var(--navy);
+  padding:14px 24px;
+  border-radius:14px;
+  font-weight:600;
+  background:white;
+  transition:0.3s ease;
+}
+
+.btn-secondary:hover{
+  background:var(--off-white);
+}
+
+/* =========================
+PREMIUM HERO
+========================= */
+
+.events-hero{
+
+  position:relative;
+
+  min-height:760px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  overflow:hidden;
+
+  padding:140px 0;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f7f6f3 100%
+  );
+}
+
+/* BACKGROUND IMAGE */
+
+.hero-background-image{
+
+  position:absolute;
+
+  inset:0;
+
+  background-image:
+  url('https://storage.ning.com/topology/rest/1.0/file/get/31150218295?profile=original');
+
+  background-size:cover;
+
+  background-position:center;
+
+  opacity:0.16;
+
+  transform:scale(1.04);
+}
+
+/* DARK OVERLAY */
+
+.hero-overlay{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+    180deg,
+    rgba(255,255,255,0.72) 0%,
+    rgba(247,246,243,0.82) 100%
+  );
+
+  z-index:1;
+}
+
+/* BLURS */
+
+.hero-blur{
+
+  position:absolute;
+
+  border-radius:50%;
+
+  filter:blur(110px);
+
+  opacity:0.18;
+
+  z-index:2;
+}
+
+.blur-1{
+
+  width:420px;
+  height:420px;
+
+  background:#C49A22;
+
+  top:-140px;
+  left:-120px;
+}
+
+.blur-2{
+
+  width:380px;
+  height:380px;
+
+  background:#4A6FA5;
+
+  bottom:-140px;
+  right:-100px;
+}
+
+.blur-3{
+
+  width:260px;
+  height:260px;
+
+  background:#ffffff;
+
+  top:50%;
+  left:50%;
+
+  transform:translate(-50%,-50%);
+}
+
+/* CONTENT */
+
+.hero-content{
+
+  position:relative;
+
+  z-index:5;
+
+  max-width:980px;
+
+  margin:auto;
+
+  text-align:center;
+}
+
+.hero-subtitle{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:12px 22px;
+
+  border-radius:50px;
+
+  background:
+  rgba(196,154,34,0.10);
+
+  border:
+  1px solid rgba(196,154,34,0.16);
+
+  color:#C49A22;
+
+  font-size:14px;
+
+  font-weight:700;
+
+  letter-spacing:0.3px;
+
+  margin-bottom:34px;
+
+  backdrop-filter:blur(10px);
+}
+
+.hero-content h1{
+
+  font-size:84px;
+
+  line-height:0.98;
+
+  letter-spacing:-4px;
+
+  color:#1F2D4E;
+
+  margin-bottom:30px;
+
+  font-weight:800;
+
+  max-width:980px;
+
+  margin-left:auto;
+
+  margin-right:auto;
+
+}
+
+.hero-content p{
+
+  font-size:22px;
+
+  color:#667085;
+
+  max-width:760px;
+
+  margin:auto;
+
+  margin-bottom:42px;
+
+  line-height:1.7;
+}
+
+/* BUTTONS */
+
+.hero-buttons{
+
+  display:flex;
+
+  justify-content:center;
+
+  gap:20px;
+}
+
+/* LIGHT BUTTON */
+
+.hero-secondary{
+
+  background:
+  rgba(255,255,255,0.82);
+
+  backdrop-filter:blur(10px);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+
+  .hero-content h1{
+
+    font-size:58px;
+
+    letter-spacing:-3px;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .events-hero{
+
+    min-height:auto;
+
+    padding:110px 0 100px;
+  }
+
+  .hero-content h1{
+
+    font-size:42px;
+
+    letter-spacing:-2px;
+  }
+
+  .hero-content p{
+
+    font-size:18px;
+  }
+
+  .hero-buttons{
+
+    flex-direction:column;
+  }
+
+}
+
+/* =========================
+EVENTS SECTION
+========================= */
+
+.events-section{
+
+  padding:110px 0 140px;
+
+  background:
+  linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #F7F6F3 100%
+  );
+}
+
+/* YEAR */
+
+.year-section{
+
+  margin-bottom:70px;
+}
+
+.year-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:35px;
+
+  padding-bottom:20px;
+
+  border-bottom:1px solid rgba(31,45,78,0.08);
+
+  cursor:pointer;
+}
+
+.year-header h2{
+
+  font-size:56px;
+
+  letter-spacing:-2px;
+
+  color:var(--navy);
+}
+
+.year-toggle{
+
+  width:52px;
+  height:52px;
+
+  border-radius:50%;
+
+  background:white;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:28px;
+
+  color:var(--gold);
+
+  box-shadow:
+  0 10px 30px rgba(31,45,78,0.08);
+}
+
+/* GRID */
+
+.events-grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:32px;
+}
+
+/* CARD */
+
+.event-card{
+
+  display:block;
+
+  background:white;
+
+  border-radius:34px;
+
+  overflow:hidden;
+
+  transition:0.45s ease;
+
+  border:1px solid rgba(0,0,0,0.04);
+
+  box-shadow:
+  0 20px 60px rgba(31,45,78,0.06);
+
+cursor: pointer;
+
+}
+
+.event-card:hover{
+
+  transform:translateY(-10px);
+
+  box-shadow:
+  0 30px 80px rgba(31,45,78,0.12);
+}
+
+/* IMAGE */
+
+.event-image{
+
+  position:relative;
+
+  height:320px;
+
+  overflow:hidden;
+}
+
+.event-image img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  transition:0.7s ease;
+}
+
+.event-card:hover .event-image img{
+
+  transform:scale(1.08);
+}
+
+/* GOLD HOVER */
+
+.event-overlay{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+    180deg,
+    rgba(196,154,34,0.08),
+    rgba(196,154,34,0.62)
+  );
+
+  opacity:0;
+
+  transition:0.45s ease;
+}
+
+.event-card:hover .event-overlay{
+
+  opacity:1;
+}
+
+/* HOVER TEXT */
+
+.hover-content{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  opacity:0;
+
+  transition:0.4s ease;
+
+  z-index:2;
+}
+
+.hover-content span{
+
+  color:white;
+
+  font-size:19px;
+
+  font-weight:700;
+
+  letter-spacing:0.4px;
+}
+
+.event-card:hover .hover-content{
+
+  opacity:1;
+}
+
+/* CARD CONTENT */
+
+.event-content{
+
+  padding:34px;
+}
+
+.event-tag{
+
+  display:inline-block;
+
+  padding:8px 16px;
+
+  border-radius:50px;
+
+  background:rgba(74,111,165,0.08);
+
+  color:var(--accent-blue);
+
+  font-size:12px;
+
+  font-weight:700;
+
+  margin-bottom:18px;
+}
+
+.event-tagline{
+  margin:10px 0 18px;
+  font-size:15px;
+  font-weight:500;
+  font-style:italic;
+  color:#667085; /* soft neutral gray */
+  line-height:1.4;
+  letter-spacing:0.2px;
+
+  position:relative;
+  padding-left:16px;
+}
+
+/* subtle vertical accent line (editorial feel) */
+.event-tagline::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:4px;
+  bottom:4px;
+  width:2px;
+  background:rgba(196,154,34,0.6);
+  border-radius:2px;
+}
+
+
+.event-content h3{
+
+  font-size:30px;
+
+  line-height:1.15;
+
+  margin-bottom:16px;
+
+  letter-spacing:-1px;
+
+  color:var(--navy);
+}
+
+.event-content p{
+
+  color:#667085;
+
+  font-size:16px;
+}
+
+/* =========================
+CTA
+========================= */
+
+.events-cta{
+
+  margin-top:110px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #1F2D4E,
+    #18233D
+  );
+
+  border-radius:42px;
+
+  padding:95px 80px;
+
+  text-align:center;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.events-cta::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(196,154,34,0.18),
+    transparent 40%
+  );
+}
+
+.events-cta::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:500px;
+  height:500px;
+
+  border-radius:50%;
+
+  background:
+  rgba(196,154,34,0.08);
+
+  top:-220px;
+  right:-120px;
+}
+
+.events-cta h2{
+
+  position:relative;
+
+  z-index:2;
+
+  color:white;
+
+  font-size:56px;
+
+  line-height:1.08;
+
+  letter-spacing:-2px;
+
+  margin-bottom:24px;
+}
+
+.events-cta p{
+
+  position:relative;
+
+  z-index:2;
+
+  color:
+  rgba(255,255,255,0.72);
+
+  font-size:18px;
+
+  max-width:760px;
+
+  margin:auto;
+
+  margin-bottom:40px;
+}
+
+.cta-btn{
+
+  position:relative;
+
+  z-index:2;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:16px 34px;
+
+  border-radius:14px;
+
+  background:var(--gold);
+
+  color:white;
+
+  font-weight:700;
+
+  transition:0.3s ease;
+
+  box-shadow:
+  0 10px 30px rgba(196,154,34,0.25);
+}
+
+.cta-btn:hover{
+
+  transform:translateY(-2px);
+
+  background:#b48818;
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer{
+  background:var(--navy);
+  color:rgba(255,255,255,0.7);
+  padding:80px 0 40px;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:40px;
+  margin-bottom:60px;
+}
+
+.footer-site-logo{
+  height:58px;
+  width:auto;
+  margin-bottom:20px;
+}
+
+.footer-column h4{
+  color:white;
+  margin-bottom:20px;
+}
+
+.footer-column a{
+  display:block;
+  color:rgba(255,255,255,0.7);
+  margin-bottom:14px;
+  transition:0.3s;
+}
+
+.footer-column a:hover{
+  color:var(--gold-light);
+}
+
+.footer-socials{
+  display:flex;
+  gap:16px;
+  margin-top:24px;
+}
+
+.footer-socials a{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.3s ease;
+}
+
+.footer-socials a:hover{
+  background:rgba(255,255,255,0.16);
+  transform:translateY(-2px);
+}
+
+.footer-socials svg{
+  width:18px;
+  height:18px;
+  fill:white;
+}
+
+
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.1);
+  padding-top:30px;
+  text-align:center;
+  font-size:14px;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+  .events-grid,
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero-content h1{
+    font-size:52px;
+  }
+
+  .year-header h2{
+    font-size:42px;
+  }
+
+  .events-cta h2{
+    font-size:42px;
+  }
+
+}
+
+@media(max-width:768px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero-content h1{
+    font-size:40px;
+    letter-spacing:-2px;
+  }
+
+  .hero-content p{
+    font-size:18px;
+  }
+
+  .events-cta{
+    padding:60px 30px;
+  }
+
+  .events-cta h2{
+    font-size:34px;
+  }
+
+  .year-header h2{
+    font-size:32px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+NAVBAR
+========================= -->
+
+<nav>
+  <div class="container nav-wrapper">
+
+    <a href="https://culytics.com" class="logo-link">
+      <img src="https://storage.ning.com/topology/rest/1.0/file/get/31147042876?profile=RESIZE_400x"
+           alt="CULytics Logo"
+           class="site-logo">
+    </a>
+
+    <div class="nav-links">
+
+      <!-- Targeted Consulting -->
+      <div class="nav-dropdown">
+
+        <a href="#" class="dropdown-trigger">
+          Targeted Consulting
+        </a>
+
+        <div class="dropdown-menu">
+          <a href="https://culytics.com/consulting">CU Consulting</a>
+          <a href="https://culytics.com/assessments">Self Assessments</a>
+          <a href="https://culytics.com/blogs/cu-peer-benchmark">CU Peer Benchmark</a>
+          <a href="https://culytics.com/blogs/peer-comparison-dashboard-marketing/">CU Peer - Mkt Dashboard</a>
+        </div>
+
+      </div>
+
+      <!-- Transformation Center -->
+      <div class="nav-dropdown">
+
+        <a href="#" class="dropdown-trigger">
+          Transformation Center
+        </a>
+
+        <div class="dropdown-menu">
+          <a href="https://culytics.com/content-library">Content Library</a>
+          <a href="https://culytics.com/blogs">Blogs</a>
+          <a href="https://culytics.com/membership">Membership</a>
+          <a href="https://culytics.com/guide-for-building-a-data-analytics-practice">Data Analytics Guide</a>
+        </div>
+
+      </div>
+
+      <!-- Events -->
+      <div class="nav-dropdown">
+
+        <a href="#" class="dropdown-trigger">
+          Events
+        </a>
+
+        <div class="dropdown-menu">
+          <a href="https://events.culytics.com/events">Upcoming Events</a>
+          <a href="https://insights.culytics.com/summit/">Past Summit</a>
+          <a href="https://insights.culytics.com/culytics-day/">Past CULytics Day</a>
+        </div>
+
+      </div>
+
+      <!-- Partners -->
+      <div class="nav-dropdown">
+
+        <a href="#" class="dropdown-trigger">
+          Partners
+        </a>
+
+        <div class="dropdown-menu">
+          <a href="https://insights.culytics.com/sp-advisory/">SP Consulting</a>
+          <a href="https://culytics.com/partner-program">Partner Opportunities</a>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="nav-buttons">
+      <a href="https://culytics.com/content-library" class="btn-secondary">
+        Explore Insights
+      </a>
+
+      <a href="https://events.culytics.com/culytics-day-2026" class="btn-primary">
+        CULytics Day 2026
+      </a>
+    </div>
+
+</div>
+</nav>
+<div class="mobile-menu-toggle">
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+</div>
+
+<div class="mobile-menu">
+
+<a href="#">
+Targeted Consulting
+</a>
+
+<a href="#">
+Transformation Center
+</a>
+
+<a href="#">
+Events
+</a>
+
+<a href="#">
+Partners
+</a>
+
+<a href="https://culytics.com/content-library" class="mobile-btn">
+Explore Insights
+</a>
+
+<a href="https://events.culytics.com/2026-summit" class="mobile-btn mobile-primary">
+CULytics Day 2026
+</a>
+
+</div>
+
+</nav>
+<!-- =========================
+PREMIUM HERO
+========================= -->
+
+<section class="events-hero">
+
+  <!-- BACKGROUND IMAGE -->
+
+  <div class="hero-background-image"></div>
+
+  <!-- OVERLAY -->
+
+  <div class="hero-overlay"></div>
+
+  <!-- BLURS -->
+
+  <div class="hero-blur blur-1"></div>
+
+  <div class="hero-blur blur-2"></div>
+
+  <div class="hero-blur blur-3"></div>
+
+  <div class="container">
+
+    <div class="hero-content">
+
+      <div class="hero-subtitle">
+        CULytics Events Ecosystem
+      </div>
+
+      <h1>
+        Executive Events Driving Credit Union Transformation
+      </h1>
+
+      <p>
+        Explore summits, executive roundtables, collaborative experiences, and strategic conversations designed for modern credit union leaders.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="https://events.culytics.com/events" class="btn-primary">
+          Explore Events
+        </a>
+
+        <a href="mailto:events@culytics.com" class="btn-secondary hero-secondary">
+          Contact Us
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================
+EVENTS
+========================= -->
+
+<section class="events-section">
+
+<div class="container">
+
+<!-- YEAR -->
+
+<div class="year-section">
+
+<div class="year-header">
+
+<h2>
+2026
+</h2>
+
+<div class="year-toggle">
++
+</div>
+
+</div>
+
+<div class="events-grid">
+
+<!-- CARD -->
+
+<a href="https://events.culytics.com/2026-summit" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31148759271?profile=original">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+CULytics Summit 2026
+</h3>
+
+<div class="event-tagline">
+Operationalize AI. Accelerate Strategic Growth.
+</div>
+
+<p>
+March 17 - 18 <br> Atlanta, Georgia
+</p>
+
+</div>
+
+</a>
+
+<!-- CARD -->
+
+<a href="https://events.culytics.com/culytics-day-2026" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31169834101?profile=RESIZE_930x">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+CULytics Day 2026
+</h3>
+<br>
+<div class="event-tagline">
+The AI-Augmented CU Data and Analytics Professional
+</div>
+
+<p>
+August 18 <br> Virtual Event
+</p>
+
+
+</div>
+
+</a>
+
+<!-- CARD -->
+
+<a href="https://events.culytics.com/esr-may-2026" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31169835659?profile=RESIZE_1200x">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+<h3>
+Expert Series Roundtable 
+</h3>
+
+<div class="event-tagline">
+From Transactions to Conversations: How People First FCU Put Member Intelligence in the Hands of Frontline Staff</div>
+
+<p>
+May 20 <br> Virtual Event
+</p>
+
+
+</div>
+
+</a>
+
+<!-- CARD -->
+
+<a href="https://events.culytics.com/esr-april-2026" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31169836697?profile=RESIZE_1200x">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+Expert Series Roundtable
+</h3>
+
+<div class="event-tagline">
+Decision Velocity : Are Your Analytics Driving Decisions — or Just Informing Them?
+</div>
+
+<p>
+April 24 <br> Virtual Event
+</p>
+
+
+</div>
+
+</a>
+
+<!-- CARD -->
+
+<a href="https://events.culytics.com/data-jan-26" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31169837094?profile=RESIZE_930x">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+Community-Led Roundtable
+</h3>
+
+<div class="event-tagline">
+From Insight to Impact: What It Actually Takes to Make AI Work Inside a Credit Union
+</div>
+
+<p>
+January 30 <br> Virtual Event
+</p>
+
+
+</div>
+
+</a>
+
+
+</div>
+
+</div>
+
+<!-- YEAR -->
+
+<div class="year-section">
+
+<div class="year-header">
+
+<h2>
+2025
+</h2>
+<div class="year-toggle">
++
+</div>
+
+</div>
+
+<div class="events-grid">
+
+<!-- CARD -->
+
+<a href="https://culytics.com/2025-summit" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31148759294?profile=original">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+CULytics Summit 2025
+</h3>
+
+<div class="event-tagline">
+Unlocking New Possibilities with Data and AI
+</div>
+
+<p>
+March 18 - 19 <br> Atlanta, Georgia
+</p>
+
+</div>
+
+</a>
+
+<!-- CARD -->
+
+<a href="https://culytics.com/2025-culytics-day" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31147059475?profile=original">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+CULytics Day 2025
+</h3>
+<br>
+<div class="event-tagline">
+Practical AI That Works
+</div>
+
+<p>
+August 19 <br> Virtual Event
+</p>
+
+
+</div>
+
+</a>
+
+
+</div>
+
+</div>
+
+<!-- YEAR -->
+
+<div class="year-section">
+
+<div class="year-header">
+
+<h2>
+2024
+</h2>
+<div class="year-toggle">
++
+</div>
+
+</div>
+
+<div class="events-grid">
+
+<!-- CARD -->
+
+<a href="https://culytics.com/2024-summit" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31148760069?profile=original">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+CULytics Summit 2024
+</h3>
+
+<div class="event-tagline">
+Navigating the Future with Gen AI
+</div>
+
+<p>
+March 25 - 28 <br> Microsoft, The Commons, Redmond, Washington
+</p>
+
+</div>
+
+</a>
+
+<!-- CARD -->
+
+<a href="https://culytics.com/2024-culytics-day" class="event-card">
+
+<div class="event-image">
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/31150236270?profile=original">
+
+<div class="event-overlay"></div>
+
+<div class="hover-content">
+
+<span>
+Explore Event
+</span>
+
+</div>
+
+</div>
+
+<div class="event-content">
+
+<h3>
+CULytics Day 2024
+</h3>
+<br>
+<div class="event-tagline">
+Charting the Future of Credit Unions
+</div>
+
+<p>
+August 20 <br> Virtual Event
+</p>
+
+
+</div>
+
+</a>
+
+</div>
+
+</div>
+
+<!-- CTA -->
+
+<div class="events-cta">
+
+<h2>
+Got Questions About CULytics Events?
+</h2>
+
+<p>
+Connect with the CULytics team to learn more about upcoming experiences, sponsorship opportunities, speaking engagements, and executive participation.
+</p>
+
+<a href="mailto:events@culytics.com" class="cta-btn">
+Contact Us
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+FOOTER
+========================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+<div>
+
+<img src="https://storage.ning.com/topology/rest/1.0/file/get/3706036834?profile=RESIZE_1200x"
+alt="CULytics Logo"
+class="footer-site-logo">
+
+<p>
+A modern ecosystem helping credit unions navigate transformation through executive collaboration, industry insights, and strategic initiatives.
+</p>
+
+<div class="footer-socials">
+
+  <!-- X / Twitter -->
+
+  <a href="https://x.com/culytics" target="_blank" aria-label="CULytics on X">
+
+    <svg viewBox="0 0 24 24">
+      <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.847h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.153h7.594l5.243 6.932 6.064-6.932zm-1.29 19.494h2.039L6.486 3.258H4.298l13.313 17.389z"/>
+    </svg>
+
+  </a>
+
+  <!-- LinkedIn -->
+
+  <a href="https://www.linkedin.com/company/culytics/" target="_blank" aria-label="CULytics on LinkedIn">
+
+    <svg viewBox="0 0 24 24">
+      <path d="M4.98 3.5C4.98 4.604 4.104 5.5 3 5.5S1.02 4.604 1.02 3.5 1.896 1.5 3 1.5s1.98.896 1.98 2zM1.5 8h3V22h-3V8zm7.5 0h2.877v1.917h.041c.401-.761 1.381-1.562 2.844-1.562 3.041 0 3.602 2.001 3.602 4.604V22h-3v-6.917c0-1.65-.029-3.771-2.297-3.771-2.299 0-2.651 1.796-2.651 3.651V22h-3V8z"/>
+    </svg>
+
+  </a>
+
+</div>
+
+</div>
+
+<div class="footer-column">
+          <h4>Connect With Us</h4>
+          <a href="https://culytics.com/about">About CULytics</a>
+          <a href="https://culytics.com/team">Team</a>
+          <a href="mailto:info@culytics.com?subject=Request to Join Mailing List&body=I would like to join the CULytics Mailing List. Please add me to the same."">Join Mailing List</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Offerings</h4>
+          <a href="https://culytics.com/consulting">CU Consulting</a>
+          <a href="https://insights.culytics.com/sp-advisory/">SP Consulting</a>
+          <a href="https://culytics.com/membership">CULytics Membership</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Community</h4>
+          <a href="https://events.culytics.com/events">Upcoming Events</a>
+          <a href="https://culytics.com/content-library">Content Library</a>
+          <a href="https://culytics.com/assessments">Self Assessments</a>
+        </div>
+
+</div>
+
+<div class="footer-bottom">
+© 2026 CULytics. All rights reserved.
+</div>
+
+</div>
+
+</footer>
+
+<script>
+document.querySelectorAll('.year-header').forEach(header => {
+
+  header.addEventListener('click', () => {
+
+    const section = header.parentElement;
+    const grid = section.querySelector('.events-grid');
+    const toggle = header.querySelector('.year-toggle');
+
+    if(!grid) return;
+
+    if(grid.style.display === 'none'){
+
+      grid.style.display = 'grid';
+      toggle.innerHTML = '−';
+
+    } else {
+
+      grid.style.display = 'none';
+      toggle.innerHTML = '+';
+
+    }
+
+  });
+
+});
+</script>
+
+<script>
+window.addEventListener('scroll', () => {
+
+  const nav = document.querySelector('nav');
+
+  if(window.scrollY > 30){
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+
+});
+</script>
+
+<script>
+
+const mobileToggle =
+document.querySelector('.mobile-menu-toggle');
+
+const mobileMenu =
+document.querySelector('.mobile-menu');
+
+mobileToggle.addEventListener('click', () => {
+
+  mobileMenu.classList.toggle('active');
+
+});
+
+</script>
+
+</body>
+</html>
