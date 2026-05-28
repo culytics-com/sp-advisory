@@ -127,6 +127,83 @@ MOBILE NAVIGATION
   font-weight:600;
 }
 
+/* MOBILE DROPDOWNS */
+
+.mobile-dropdown{
+  border-bottom:1px solid rgba(0,0,0,0.06);
+}
+
+.mobile-dropdown-toggle{
+
+  width:100%;
+
+  background:none;
+
+  border:none;
+
+  padding:16px 0;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  font-size:16px;
+
+  font-weight:600;
+
+  color:var(--navy);
+
+  cursor:pointer;
+
+  text-align:left;
+}
+
+.mobile-dropdown-toggle span{
+
+  font-size:22px;
+
+  color:var(--gold);
+
+  transition:0.3s ease;
+}
+
+.mobile-submenu{
+
+  display:none;
+
+  padding-bottom:12px;
+}
+
+.mobile-submenu.active{
+  display:block;
+}
+
+.mobile-submenu a{
+
+  display:block;
+
+  padding:12px 16px;
+
+  border-radius:10px;
+
+  margin-bottom:6px;
+
+  color:#667085;
+
+  font-size:15px;
+
+  transition:0.3s ease;
+}
+
+.mobile-submenu a:hover{
+
+  background:rgba(196,154,34,0.08);
+
+  color:var(--gold);
+}
+  
 .mobile-btn{
 
   margin-top:10px;
@@ -1222,69 +1299,117 @@ NAVBAR
 </div>
 
 </div>
-
+<!-- MOBILE MENU -->
 <div class="mobile-menu">
 
-    <!-- Targeted Consulting -->
-      <div class="nav-dropdown">
+  <!-- Targeted Consulting -->
+  <div class="mobile-dropdown">
 
-        <a href="#" class="dropdown-trigger">
-          Targeted Consulting
-        </a>
+    <button class="mobile-dropdown-toggle">
+      Targeted Consulting
+      <span>+</span>
+    </button>
 
-        <div class="dropdown-menu">
-          <a href="https://culytics.com/consulting">CU Consulting</a>
-          <a href="https://culytics.com/assessments">Self Assessments</a>
-          <a href="https://culytics.com/blogs/cu-peer-benchmark">CU Peer Benchmark</a>
-          <a href="https://culytics.com/blogs/peer-comparison-dashboard-marketing/">CU Peer - Mkt Dashboard</a>
-        </div>
+    <div class="mobile-submenu">
 
-      </div>
+      <a href="https://culytics.com/consulting">
+        CU Consulting
+      </a>
 
- <!-- Transformation Center -->
-      <div class="nav-dropdown">
+      <a href="https://culytics.com/assessments">
+        Self Assessments
+      </a>
 
-        <a href="#" class="dropdown-trigger">
-          Transformation Center
-        </a>
+      <a href="https://culytics.com/blogs/cu-peer-benchmark">
+        CU Peer Benchmark
+      </a>
 
-        <div class="dropdown-menu">
-          <a href="https://culytics.com/content-library">Content Library</a>
-          <a href="https://culytics.com/blogs">Blogs</a>
-          <a href="https://culytics.com/membership">Membership</a>
-          <a href="https://culytics.com/guide-for-building-a-data-analytics-practice">Data Analytics Guide</a>
-        </div>
+      <a href="https://culytics.com/blogs/peer-comparison-dashboard-marketing/">
+        CU Peer - Mkt Dashboard
+      </a>
 
-      </div>
+    </div>
 
-<!-- Events -->
-      <div class="nav-dropdown">
+  </div>
 
-        <a href="#" class="dropdown-trigger">
-          Events
-        </a>
+  <!-- Transformation Center -->
+  <div class="mobile-dropdown">
 
-        <div class="dropdown-menu">
-          <a href="https://events.culytics.com/events">Upcoming Events</a>
-          <a href="https://events.culytics.com/culytics-day-2026">CULytics Day 2026</a>
-          <a href="https://insights.culytics.com/events/">Past Events</a>
-        </div>
+    <button class="mobile-dropdown-toggle">
+      Transformation Center
+      <span>+</span>
+    </button>
 
-      </div>
+    <div class="mobile-submenu">
 
- <!-- Partners -->
-      <div class="nav-dropdown">
+      <a href="https://culytics.com/content-library">
+        Content Library
+      </a>
 
-        <a href="#" class="dropdown-trigger">
-          Partners
-        </a>
+      <a href="https://culytics.com/blogs">
+        Blogs
+      </a>
 
-        <div class="dropdown-menu">
-          <a href="https://insights.culytics.com/sp-advisory/">SP Consulting</a>
-          <a href="https://culytics.com/partner-program">Partner Opportunities</a>
-        </div>
+      <a href="https://culytics.com/membership">
+        Membership
+      </a>
 
-      </div>
+      <a href="https://culytics.com/guide-for-building-a-data-analytics-practice">
+        Data Analytics Guide
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Events -->
+  <div class="mobile-dropdown">
+
+    <button class="mobile-dropdown-toggle">
+      Events
+      <span>+</span>
+    </button>
+
+    <div class="mobile-submenu">
+
+      <a href="https://events.culytics.com/events">
+        Upcoming Events
+      </a>
+
+      <a href="https://events.culytics.com/culytics-day-2026">
+        CULytics Day 2026
+      </a>
+
+      <a href="https://insights.culytics.com/events/">
+        Past Events
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Partners -->
+  <div class="mobile-dropdown">
+
+    <button class="mobile-dropdown-toggle">
+      Partners
+      <span>+</span>
+    </button>
+
+    <div class="mobile-submenu">
+
+      <a href="https://insights.culytics.com/sp-advisory/">
+        SP Consulting
+      </a>
+
+      <a href="https://culytics.com/partner-program">
+        Partner Opportunities
+      </a>
+
+    </div>
+
+  </div>
+
 </div>
 
 <!--a href="https://culytics.com/content-library" class="mobile-btn">
@@ -1917,6 +2042,8 @@ window.addEventListener('scroll', () => {
 
 <script>
 
+/* MOBILE MENU */
+
 const mobileToggle =
 document.querySelector('.mobile-menu-toggle');
 
@@ -1926,6 +2053,43 @@ document.querySelector('.mobile-menu');
 mobileToggle.addEventListener('click', () => {
 
   mobileMenu.classList.toggle('active');
+
+});
+
+/* MOBILE SUBMENUS */
+
+document.querySelectorAll('.mobile-dropdown-toggle')
+.forEach(toggle => {
+
+  toggle.addEventListener('click', () => {
+
+    const submenu =
+    toggle.nextElementSibling;
+
+    const plus =
+    toggle.querySelector('span');
+
+    submenu.classList.toggle('active');
+
+    plus.innerHTML =
+    submenu.classList.contains('active')
+    ? '−'
+    : '+';
+
+  });
+
+});
+
+/* CLOSE MENU ON LINK CLICK */
+
+document.querySelectorAll('.mobile-menu a')
+.forEach(link => {
+
+  link.addEventListener('click', () => {
+
+    mobileMenu.classList.remove('active');
+
+  });
 
 });
 
